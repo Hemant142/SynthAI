@@ -9,7 +9,10 @@ export default function Text() {
     const handleSubmit=(e)=>{
         e.preventDefault()
 
-    axios(`http://localhost:8080/openai`)
+    axios(`http://localhost:8080/openai`, {headers:{
+        "Prompt":prompt
+    }})
+
     .then((res)=>setResponse(res.data))
     .catch((err)=>setResponse(err.message))
     }
