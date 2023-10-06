@@ -11,10 +11,12 @@ export default function Text() {
     const handleSubmit=(e)=>{
         e.preventDefault()
 
+
     axios(`http://localhost:8080/bot/chat?prompt=${text}`)
     .then((res)=>{
         console.log(res.data)
         setResponse(res.data)})
+
     .catch((err)=>setResponse(err.message))
     }
   return (
