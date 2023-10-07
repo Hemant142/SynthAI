@@ -126,6 +126,7 @@ const Carousel: React.FC = () => {
       </div>
     </section>
   );
+  
 };
 
 export default Carousel;
