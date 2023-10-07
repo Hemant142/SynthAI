@@ -19,8 +19,8 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col items-center justify-center md:flex-row">
             <div className="md:w-1/2">
               <img
-                className="h-64 w-full object-cover md:rounded-lg"
-                src="https://blog.vantagecircle.com/content/images/size/w1500/2019/04/interview-questions.png"
+                className="h-full w-full object-cover md:rounded-lg"
+                src="https://blog.vantagecircle.com/content/images/size/w1000/2019/04/interview-questions.png"
                 alt="Interview Preparation"
               />
             </div>
