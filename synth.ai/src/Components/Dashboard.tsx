@@ -1,30 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import react from "../image/react.png";
 import java from "../image/java.png";
 import node from "../image/node.png";
 import js from "../image/js.png";
 import redux from "../image/redux.png";
 import tailwind from "../image/tailwind.png";
-import Dictaphone from './SpeechRecognition';
-function Dashboard() {
-    const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
-    const [isStarted, setIsStarted] = useState(false);
-    const [recordedText, setRecordedText] = useState<string | null>(null);
-    const [timer, setTimer] = useState<number | null>(null); 
-    const handleClick = (courseValue: string) => {
-      setSelectedCourse(courseValue);
-    
-    };
+import Dictaphone from "./SpeechRecognition";
+const REACT = [
+  "Can you please introduce yourself and provide an overview of your experience working with the MERN stack? Highlight any notable projects or challenges you've tackled.",
+  "What is MERN stack? Explain the components of MERN.",
+  "How does React Router differ from traditional routing?",
+  "What is JSX? How does it differ from HTML?",
+  "Explain the concept of state and props in React.",
+];
+const NodeJs = [
+  "To start, could you briefly introduce yourself and give us an overview of your background as a Node.js backend developer?",
+  "What is Node.js? How does it differ from traditional server-side technologies?",
+  "How does Node.js handle asynchronous operations? Provide an example.",
+  "Explain the concept of the event loop in Node.js.",
+  "What is the purpose of middleware in an Express.js application?",
+];
 
-    const handleStartButtonClick = () => {
-        setIsStarted(true); // Enable timer and voice recognition
-      };
-      const handleDictaphoneText = (text: string) => {
-        setRecordedText(text);
-      };
-  const handleSubmit = () => {
-    console.log(recordedText,"Text")
+const Java = [
+  "Let's begin with a brief introduction. Could you share your background as a Java developer with a focus on Spring Boot?",
+  "What is Spring Framework? How does Spring Boot simplify application development?",
+  "Explain the concept of inversion of control (IoC) in the context of Spring.",
+  "What is dependency injection? How is it achieved in Spring?",
+  "Describe the annotations @Component, @Service, @Repository, and @Controller in Spring.",
+];
+function Dashboard() {
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [isStarted, setIsStarted] = useState(false);
+  const [recordedText, setRecordedText] = useState<string | null>(null);
+  const [timer, setTimer] = useState<number | null>(null);
+  const [index, setIndex] = useState(0);
+  const [question, setQuestion] = useState("");
+  const handleClick = (courseValue: string) => {
+    setSelectedCourse(courseValue);
   };
+
+  useEffect(() => {
+    console.log(selectedCourse);
+    if (selectedCourse === "REACT") {
+      setQuestion(REACT[index]);
+    }
+    if (selectedCourse === "nodejs") {
+      setQuestion(NodeJs[index]);
+    }
+    if (selectedCourse === "Java") {
+      setQuestion(Java[index]);
+    }
+  }, [index, selectedCourse]);
+  const handleStartButtonClick = () => {
+    setIsStarted(true); // Enable timer and voice recognition
+  };
+  const handleDictaphoneText = (text: string) => {
+    setRecordedText(text);
+  };
+  const handleSubmit = () => {
+    if (index < `${selectedCourse}`.length - 1) {
+      setIndex(index + 1);
+    } else {
+      setIndex(0);
+    }
+    console.log(question,"Question")
+  };
+  // setQuestion(mearn[index])
+  // console.log(mearn[index], "Text");/
 
   return (
     <div>
@@ -35,22 +77,21 @@ function Dashboard() {
         </h2>
       </div>
       <div className="flex justify-center mt-10 gap-10 w-full hover:zoom">
-      
-      <img
-        // value="React"
-        onClick={() => handleClick("React")}
-        className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3"
-        src={react} // Make sure `react` is a valid variable holding your image source
-        alt=""
-      />
-      <img
-        onClick={() => handleClick("Node")}
-        className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3"
-        src={node} // Make sure `node` is a valid variable holding your image source
-        alt=""
-      />
         <img
-           onClick={() => handleClick("JAVA")}
+          // value="React"
+          onClick={() => handleClick("REACT")}
+          className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3"
+          src={react} // Make sure `react` is a valid variable holding your image source
+          alt=""
+        />
+        <img
+          onClick={() => handleClick("NodeJs")}
+          className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3"
+          src={node} // Make sure `node` is a valid variable holding your image source
+          alt=""
+        />
+        <img
+          onClick={() => handleClick("Java")}
           className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3   "
           src={java}
           alt=""
@@ -62,7 +103,7 @@ function Dashboard() {
           alt=""
         />
         <img
-         onClick={() => handleClick("Redux")}
+          onClick={() => handleClick("Redux")}
           className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3   "
           src={
             "https://cdn-images-1.medium.com/max/1600/1*Vo5RDpNkOsfDn8sx06mthA.png"
@@ -70,7 +111,7 @@ function Dashboard() {
           alt=""
         />
         <img
-         onClick={() => handleClick("JavaScript")}
+          onClick={() => handleClick("JavaScript")}
           className="w-1/12 transition-transform transform scale-100 hover:scale-110 border-4 border-custom-green rounded-full p-3   "
           src={"https://www.code2inspire.com/icons/jsIcon.png"}
           alt=""
@@ -78,25 +119,48 @@ function Dashboard() {
       </div>
       {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
       <h2 className="text-2xl text-custom-teal font-serif italic font-bold">
-         {selectedCourse?(<button
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded ml-10 mt-10"
-          onClick={handleStartButtonClick}
-        >
-         {selectedCourse}
-        </button>):"Select a Course"}
-        </h2>
+        {selectedCourse ? (
+          <button
+          
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded ml-5 mt-10"
+            onClick={handleStartButtonClick}
+          >
+            {selectedCourse}
+          </button>
+        ) : (
+          <div className="ml-10 mt-10">
+          Select a Course
+          </div>
+        )}
+      </h2>
 
-        {recordedText && <p className='w-160 h-160 ml-10 mr-10 mt-10 border border-2'>Recorded Text: {recordedText}</p>}
+      {isStarted && (
+        <div className="ml-14 mr-10">
+          <h2>Question:</h2>
+          <p>{question}</p>
+        </div>
+      )}
 
-      {selectedCourse&&<Dictaphone onTextChange={handleDictaphoneText} isStarted={isStarted} />}
-       {selectedCourse&&<button
-          className='bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-10'
+      {isStarted && (
+        <div className="mt-10 ml-14 mr-10">
+          <h2>Your Answer:</h2>
+          <p className="w-160 h-160 ml-10 mr-10  border border-2">
+            Recorded Text: {recordedText}
+          </p>
+        </div>
+      )}
+
+      {isStarted && (
+        <Dictaphone onTextChange={handleDictaphoneText} isStarted={isStarted} />
+      )}
+      {isStarted && (
+        <button
+          className="bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-5"
           onClick={handleSubmit}
         >
           Submit Data
-        </button>}
-
-
+        </button>
+      )}
     </div>
   );
 }
