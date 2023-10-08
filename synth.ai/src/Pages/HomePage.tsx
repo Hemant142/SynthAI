@@ -4,6 +4,7 @@ import Header from "../Components/Header";
 import Carousel from "../Components/Carousel";
 import Features from "../Components/Features";
 import Footer from "../Components/Footer";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   return (
@@ -36,12 +37,12 @@ const HomePage: React.FC = () => {
                 interview questions, coding challenges, and expertly crafted
                 solutions to help you succeed in your dream job interviews.
               </p>
-              <a
-                href="/signup" // Replace with your signup page URL
+             <Link to={"/dashboard"}> <a
+                // href="/signup" // Replace with your signup page URL
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg text-center inline-block mt-4 transition duration-300"
               >
-                Sign Up Now
-              </a>
+                Dashboard
+              </a></Link>
             </div>
           </div>
         </div>

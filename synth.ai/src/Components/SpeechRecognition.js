@@ -32,13 +32,13 @@ const Dictaphone: React.FC<DictaphoneProps> = ({ onTextChange,isStarted }) => {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
-  const test = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 mt-10';
-  const che = 'bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-10';
+  const test = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 mt-5';
+  const che = 'bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-5';
 
   return (
     <>
       <div>
-        <p className='bg-blue-400 text-white center font-bold py-2 px-4 rounded mt-10 w-30'>
+        <p className='bg-blue-400 text-white center font-bold py-2 px-4 rounded mt-10 ml-10 w-30'>
          Try Speaking your responce !!! Currenntly  Microphone: {listening ? 'on' : 'off'}
         </p>  
 
