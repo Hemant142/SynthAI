@@ -10,6 +10,6 @@
 
 ### Tech Stack
 1. For backend we used Java, SpringBoot.
-2. For Frontend we used Tailwind,React,TypeScript.
+2. For Frontend we used HTML,CSS,Javascript,TypeScript.
 
 
