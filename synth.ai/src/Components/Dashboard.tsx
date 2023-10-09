@@ -37,7 +37,7 @@ function Dashboard() {
   const [index, setIndex] = useState(0);
   const [feedback,setFeedback]=useState(false)
   const [question, setQuestion] = useState("")
-  const [response,setResponse]=useState<string[]>([])
+  const [response,setResponse]=useState([])
   const handleClick = (courseValue: string) => {
     setSelectedCourse(courseValue);
   };
@@ -69,20 +69,20 @@ function Dashboard() {
     setFeedback(false)
     console.log(question,"Question")
   }
-  let Prompot =`Use the DUBX method : D - Defination, U - Use Case, B - Benefits, X - Extra Information,
-  Now you have this question:[${question}] and answer:[ ${recordedText} ]provide me with the feedback on the above answer using the Method provided and five score on the scale of 1-10 and area of improvements and at last provide the correct answer using the above DUBX method`;
-  
+  let Prompot =`Use the DUBX method  D for Defination, U for Use Case, B for Benefits, X  for Extra Information,
+  Now you have this question ${question} and answer ${recordedText} provide me with the feedback on the above answer using the Method provided and five score on the scale of 1 to 10 and area of improvements and at last provide the correct answer using the above DUBX method`;
+  const URL=`http://localhost:8080/bot/chat?prompt=${Prompot}`
   const handleSubmit = () => {
-    setFeedback(true)
-
-    console.log(Prompot)
-
-
+    console.log(URL)
     
+    setFeedback(true);
+  axios.get(URL).then((res)=>setResponse(res.data))
+  .catch((e)=>console.log(e));
+ 
   };
   // setQuestion(mearn[index])
   // console.log(mearn[index], "Text");/
-
+console.log(response,"REsponse")
   return (
     <div>
       {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
@@ -166,13 +166,17 @@ function Dashboard() {
       )}
 
 {feedback && (
-        <div className="mt-10 ml-14 mr-10">
-          <h2>Feedback</h2>
-          <p className="w-160 h-160 ml-10 mr-10  border border-2">
-           Intervew Text:
-          </p>
-        </div>
+  <div className="mt-10 ml-14 mr-10">
+    <h2>Feedback</h2>
+    <div className="w-160 h-160 ml-10 mr-10 border border-2">
+      {Array.isArray(response) && response.length > 0 ? (
+        response.map((ele, index) => <p key={index}>{ele}</p>)
+      ) : (
+        <p>Please Wait</p>
       )}
+    </div>
+  </div>
+)}
 
       {isStarted && (
         <Dictaphone onTextChange={handleDictaphoneText} isStarted={isStarted} />
