@@ -6,6 +6,7 @@ import js from "../image/js.png";
 import redux from "../image/redux.png";
 import tailwind from "../image/tailwind.png";
 import Dictaphone from "./SpeechRecognition";
+import axios from "axios"
 const REACT = [
   "Can you please introduce yourself and provide an overview of your experience working with the MERN stack? Highlight any notable projects or challenges you've tackled.",
   "What is MERN stack? Explain the components of MERN.",
@@ -34,7 +35,9 @@ function Dashboard() {
   const [recordedText, setRecordedText] = useState<string | null>(null);
   const [timer, setTimer] = useState<number | null>(null);
   const [index, setIndex] = useState(0);
-  const [question, setQuestion] = useState("");
+  const [feedback,setFeedback]=useState(false)
+  const [question, setQuestion] = useState("")
+  const [response,setResponse]=useState<string[]>([])
   const handleClick = (courseValue: string) => {
     setSelectedCourse(courseValue);
   };
@@ -57,13 +60,25 @@ function Dashboard() {
   const handleDictaphoneText = (text: string) => {
     setRecordedText(text);
   };
-  const handleSubmit = () => {
+  const handleNextQuestion=()=>{
     if (index < `${selectedCourse}`.length - 1) {
       setIndex(index + 1);
     } else {
       setIndex(0);
     }
+    setFeedback(false)
     console.log(question,"Question")
+  }
+  let Prompot =`Use the DUBX method : D - Defination, U - Use Case, B - Benefits, X - Extra Information,
+  Now you have this question:[${question}] and answer:[ ${recordedText} ]provide me with the feedback on the above answer using the Method provided and five score on the scale of 1-10 and area of improvements and at last provide the correct answer using the above DUBX method`;
+  
+  const handleSubmit = () => {
+    setFeedback(true)
+
+    console.log(Prompot)
+
+
+    
   };
   // setQuestion(mearn[index])
   // console.log(mearn[index], "Text");/
@@ -150,16 +165,33 @@ function Dashboard() {
         </div>
       )}
 
+{feedback && (
+        <div className="mt-10 ml-14 mr-10">
+          <h2>Feedback</h2>
+          <p className="w-160 h-160 ml-10 mr-10  border border-2">
+           Intervew Text:
+          </p>
+        </div>
+      )}
+
       {isStarted && (
         <Dictaphone onTextChange={handleDictaphoneText} isStarted={isStarted} />
       )}
       {isStarted && (
+        <div>
         <button
           className="bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-5"
           onClick={handleSubmit}
         >
           Submit Data
         </button>
+        <button
+          className="bg-green-500 text-white font-bold py-2 px-4 rounded ml-10 mt-5"
+          onClick={handleNextQuestion}
+        >
+          Next Question
+        </button>
+        </div>
       )}
     </div>
   );
