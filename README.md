@@ -8,4 +8,8 @@
 ### Dashboard Page
 ![landing3](https://github.com/Hemant142/SynthAI/assets/115462441/0d815dca-16cb-403c-9e27-a14f0fe01ccc)
 
+### Tech Stack
+-For backend we used Java, SpringBoot.
+-For Frontend we used Tailwind,React,TypeScript.
+
 
